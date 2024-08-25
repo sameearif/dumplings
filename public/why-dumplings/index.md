@@ -1,7 +1,8 @@
 ---
 title: "Why Dumplings?"
-date: '2024-08-26 '
-spoiler: "A short line here."
+date: '2024-08-25 '
+spoiler: "Teeny tiny pockets of goodness."
+image: "/why-dumplings/dumplings.jpg"
 ---
 
 ![Slide from the talk](dumplings.jpg)
