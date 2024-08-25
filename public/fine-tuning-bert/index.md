@@ -1,13 +1,13 @@
 ---
-title: "Fine-tune Bert"
+title: "To BERT, with RoBERTa"
 date: '2024-08-26 '
-spoiler: "Teeny tiny pockets of goodness."
+spoiler: "Basic understanding and fine-tuning."
 image: "/fine-tuning-bert/bert.png"
 ---
 
 ![Slide from the talk](bert.png)
 <div style={{ textAlign: 'center', fontSize: '12px', marginTop: '-20px' }}>
-  *Cute Dumplings Illustration from <a href="https://www.vexels.com/vectors/preview/330580/cute-dumplings-illustration?ref=vexelsck">Vexels</a>*
+  *Illustration using GPT-4o*
 </div>
 
 Lorem ipsum odor amet, consectetuer adipiscing elit. Malesuada per non cubilia enim molestie volutpat; sagittis donec taciti? Neque ante varius volutpat interdum gravida. Consequat rutrum pulvinar ornare porttitor class condimentum. Conubia nec erat mollis posuere quisque sollicitudin feugiat ante molestie. Porta quam senectus rhoncus iaculis praesent iaculis. Laoreet netus nulla, habitasse vel ipsum a. Semper id vel ultrices platea primis iaculis. Faucibus amet aptent ex mi, morbi sodales phasellus.
