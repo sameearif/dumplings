@@ -1,20 +1,20 @@
 import { Feed } from "feed";
 
 export function generateFeed(posts, metadata) {
-  const site_url = "https://overreacted.io/";
+  const site_url = "https://dumplings.sameearif.com/";
 
   const feedOptions = {
     author: {
-      name: "Dan Abramov",
-      email: "dan.abramov@gmail.com",
+      name: "Samee Arif",
+      email: "samee.arif@gmail.com",
       link: site_url,
     },
     description: metadata.description,
-    favicon: `${site_url}/icon.png`,
+    favicon: `${site_url}/dumpling.png`,
     feedLinks: { atom: `${site_url}atom.xml`, rss: `${site_url}rss.xml` },
     generator: "Feed for Node.js",
     id: site_url,
-    image: "https://github.com/gaearon.png",
+    image: `${site_url}/dumpling.png`, 
     link: site_url,
     title: metadata.title,
   };
