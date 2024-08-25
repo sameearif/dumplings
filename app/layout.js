@@ -70,7 +70,7 @@ export default function RootLayout({ children }) {
           <main className="flex-grow">{children}</main>
           <footer className="mt-12 text-center text-[10px] text-gray-500">
             <p>
-              Wesbite Design and code by{" "}
+              Wesbite design and code by{" "}
               <a
                 href="https://github.com/gaearon/overreacted.io"
                 target="_blank"
