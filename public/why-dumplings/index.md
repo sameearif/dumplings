@@ -10,7 +10,7 @@ image: "/why-dumplings/dumplings.jpg"
   *Cute Dumplings Illustration from <a href="https://www.vexels.com/vectors/preview/330580/cute-dumplings-illustration?ref=vexelsck">Vexels</a>*
 </div>
 
-Welcome to Dumplings—where I talk about Natural Language Processing in bite-sized blog posts. You might be wondering, "Why call a blog *Dumplings*?" Well, let me explain.
+Welcome to Dumplings—where I talk about Natural Language Processing (NLP) in bite-sized blog posts. You might be wondering, "Why call a NLP blog *Dumplings*?" Well, let me explain.
 
 Dumplings are a metaphor for what I aim to do here. These delicious, teeny tiny pockets of goodness are packed with flavor, and love. That's exactly what I envision for this blog—short posts that are full of information. Just a side note: pair the dumplings with chilli oil and Samyang 2x Spicy Ramen<sup>[1]</sup>, you'll turn into a dragon but it will be worth it.
 
