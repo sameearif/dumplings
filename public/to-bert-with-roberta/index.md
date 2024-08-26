@@ -122,12 +122,12 @@ Since Transformers do not have a built-in notion of sequence order, positional e
 
 
 ### References
-<div style={{ fontSize: '14px', lineHeight: '0', marginTop: '0px' }}>
+<div style={{ fontSize: '14px', marginTop: '-10px' }}>
   [1] <a href="https://aclanthology.org/N19-1423/" target="_blank">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding</a>
 </div>
-<div style={{ fontSize: '14px', lineHeight: '0', marginTop: '0px' }}>
+<div style={{ fontSize: '14px', marginTop: '-10px' }}>
   [2] <a href="https://arxiv.org/abs/1907.11692" target="_blank">RoBERTa: A Robustly Optimized BERT Pretraining Approach</a>
 </div>
-<div style={{ fontSize: '14px', lineHeight: '0', marginTop: '0px' }}>
+<div style={{ fontSize: '14px', marginTop: '-10px' }}>
   [3] <a href="https://aclanthology.org/2021.emnlp-main.160/" target="_blank">Fast WordPiece Tokenization</a>
 </div>
