@@ -1,7 +1,7 @@
 ---
 title: "To BERT, with RoBERTa: Part I"
 date: '2024-08-26'
-spoiler: "Basic understanding of the encoder-only models."
+spoiler: "Understanding the encoder-only models."
 image: "/to-bert-with-roberta-p1/bert.png"
 ---
 
@@ -39,6 +39,8 @@ Both BERT<sup>[1]</sup> and RoBERTa<sup>[2]</sup> are encoder-only transformer m
 <div style={{ textAlign: 'center', fontSize: '12px', marginTop: '-20px' }}>
   Figure 2: *The architecture of encoder-only model*
 </div>
+The first image in Figure 2 presents the encoder only architecture with one encoder block. The second image presents the BERT and RoBERTa architecture with multiple encoder blocks stacked on top of each other.
+
 #### 1. Input Embeddings
 Each word in the input sequence is first converted into tokens. BERT and RoBERTa use a WordPiece<sup>[3]</sup> tokenizer, which splits words into subwords or characters, particularly for rare or out-of-vocabulary words.
 
@@ -281,17 +283,30 @@ After adding the Input Embeddings and Positional Embeddings, we'll get final emb
 </div>
 
 
-After we have the attention weight matrix `W`, we calcuate the output of the attention head using the equation `A = W x V`. We get `A` of shape <code>(s, h<sub>head</sub>)</code> and it is a context-aware representations for each token in the sequence, allowing the model to focus on the most important parts of the input when generating its final output.
+After we have the attention weight matrix `W`, we calcuate the output of the attention head using the equation <code>A<sub>i</sub> = W x V</code> for the ith head. We get <code>A<sub>i</sub></code> of shape <code>(s, h<sub>head</sub>)</code> and it is a context-aware representations for each token in the sequence, allowing the model to focus on the most important parts of the input when generating its final output.
 
 <div>
   <span>
     In multi-head attention, this process is repeated for several heads (each with different 
     weight matrices <code>W<sub>Q</sub></code>, <code>W<sub>K</sub></code>, and <code>W<sub>V</sub></code>). 
     This allows the model to focus on different parts of the sequence. The output matrices 
-    <code>A</code> from each head are concatenated to get the final output <code>A<sub>atten</sub></code> of multi-head attention. After concatenation, the shape of <code>A<sub>atten</sub></code> will be <code>(s, n<sub>head</sub>xh<sub>head</sub>) = (s, h)</code>.
+    <code>A<sub>i</sub></code> from each head are concatenated to get the final output <code>A<sub>atten</sub></code> of multi-head attention. After concatenation, the shape of <code>A<sub>atten</sub></code> will be <code>(s, n<sub>head</sub>xh<sub>head</sub>) = (s, h)</code>.
   </span>
 </div>
 
+#### d. Add & Norm
+The output of the multi-head attention <code>A<sub>atten</sub></code> is added to the original input `X`. This residual connection helps to mitigate the vanishing gradient problem by allowing gradients to flow directly through the network, making it easier to train deep networks. The residual connection also helps in preserving the original information from the input. After adding the residual connection, the result is passed through a layer normalization step. Layer normalization stabilizes the training by normalizing the output of Add step to have a mean of 0 and a standard deviation of 1 across the hidden dimension. The output of this layer is denoted by <code>X<sub>norm</sub></code> and it's shape is `(s, h)`.
+<p style={{ textAlign: 'center', marginTop: '-10px', lineHeight: '15px', fontSize: '14px', marginBottom: '-10px' }}>
+  <span><code>X<sub>norm</sub> = LayerNorm(X + A<sub>atten</sub>)</code></span>
+</p>
+
+#### c. Feed Forward Layer
+Both BERT and RoBERTa have two feed forward layers. The first feed forward layer projects <code>X<sub>norm</sub></code> from size `(s, h)` to <code>(s, h<sub>ff</sub>)</code> where <code>h<sub>ff</sub></code> is greater than `h`. The second feed forward layer projects the output of the first layer back to `(s, h)`. The output of the second layer denoted as <code>O<sub>ff<sub></sub></sub></code> is then passed into the second Add & Norm part of the encoder block. The output of the second Add & Norm is denoted by <code>X<sub>norm<sub></sub></sub></code> and it's shape is `(s, h)`.
+<p style={{ textAlign: 'center', marginTop: '-10px', lineHeight: '15px', fontSize: '14px', marginBottom: '-10px' }}>
+  <span><code>X<sub>norm</sub> = LayerNorm(X<sub>norm</sub> + O<sub>ff</sub>)</code></span>
+</p>
+
+The output of the encoder block <code>X<sub>norm</sub></code> is passed to the next encoder block. And the final <code>X<sub>norm</sub></code> can be passed to a feed forward classifier layer for prediction.
 
 ### References
 <div style={{ fontSize: '14px', marginTop: '-10px' }}>

@@ -6,7 +6,6 @@ import AutoRefresh from "./AutoRefresh";
 import { serif, sans } from "./fonts";
 import './global.css';
 
-
 export default function RootLayout({ children }) {
   return (
     <AutoRefresh>
@@ -65,13 +64,24 @@ export default function RootLayout({ children }) {
                 >
                   <FontAwesomeIcon icon={faGoogle} className="h-6 w-6" />
                 </Link>
+                <Link
+                  href="https://huggingface.co/sameearif"
+                  target="_blank"
+                  className="mx-2 hover:scale-[1.2] transition-transform duration-200 ease-out"
+                >
+                  <img
+                    alt="Hugging Face"
+                    src="/huggingface.png"
+                    className="h-6 w-6"
+                  />
+                </Link>
               </div>
             </div>
           </header>
           <main className="flex-grow">{children}</main>
           <footer className="mt-12 text-center text-[10px] text-gray-500">
             <p>
-              Wesbite design and code by{" "}
+              Website design and code by{" "}
               <a
                 href="https://github.com/gaearon/overreacted.io"
                 target="_blank"
