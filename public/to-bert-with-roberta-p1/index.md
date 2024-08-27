@@ -7,10 +7,11 @@ image: "/to-bert-with-roberta-p1/bert.png"
 
 ![Slide from the talk](bert.png)
 <div style={{ textAlign: 'center', fontSize: '12px', marginTop: '-20px' }}>
-  *Illustration generated using GPT-4o*
+  Figure 1: *Illustration generated using GPT-4o*
 </div>
+
 ### Introduction
-Both BERT<sup>[1]</sup> and RoBERTa<sup>[2]</sup> are encoder-only transformer models that transform an input sequence into a set of continuous representations (vectors) to capture the information and context of the input. These models can be applied to tasks listed below, by adding a classification layer on top of the model.
+Both BERT<sup>[1]</sup> and RoBERTa<sup>[2]</sup> are encoder-only transformer models that transform an input sequence into a set of continuous representations (vectors) to capture the information and context of the input. These models can be applied to tasks listed below, by adding a classification layer on top.
 
 <ol style={{ marginTop: '-15px' }}>
   <li>
@@ -35,8 +36,11 @@ Both BERT<sup>[1]</sup> and RoBERTa<sup>[2]</sup> are encoder-only transformer m
 
 ### Model Architecture
 ![Slide from the talk](architecture.svg)
+<div style={{ textAlign: 'center', fontSize: '12px', marginTop: '-20px' }}>
+  Figure 2: *The architecture of encoder-only model*
+</div>
 #### 1. Input Embeddings
-Each word in the input sequence is first converted into tokens. BERT and RoBERTa use a WordPiece<sup>[3]</sup> tokenizer, which splits words into subwords or characters for rare or out-of-vocabulary words.
+Each word in the input sequence is first converted into tokens. BERT and RoBERTa use a WordPiece<sup>[3]</sup> tokenizer, which splits words into subwords or characters, particularly for rare or out-of-vocabulary words.
 
 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '0px' }}>
   <span style={{ fontWeight: 'bold', marginRight: '10px' }}>Dumplings</span>
@@ -46,7 +50,7 @@ Each word in the input sequence is first converted into tokens. BERT and RoBERTa
     <span style={{ color: 'black', backgroundColor: '#FECB6F', padding: '5px 5px', borderRadius: '5px', marginRight: '5px', fontSize: '12px' }}>##lings</span>
   </div>
 </div>
-<p style={{ textAlign: 'center', marginTop: '5px', fontSize: '12px', marginBottom: '-10px' }}><em>The ## indicates that the token is a continuation of the previous token.</em></p>
+<p style={{ textAlign: 'center', marginTop: '5px', fontSize: '12px', marginBottom: '-10px' }}>Figure 3: <em>Conversion of word to tokens. ## indicates that the token is a continuation of the previous token</em></p>
 
 In addition to word and subword tokens, the vocabulary includes special tokens like:
 
@@ -70,7 +74,7 @@ In addition to word and subword tokens, the vocabulary includes special tokens l
   <span style={{ fontSize: '14px' }}>Used for padding multiple sequences to the same length.</span>
 </div>
 
-This vocabulary is created by tokenizing the pre-training dataset, where tokens are ranked by their frequency in the corpus—more common tokens are assigned lower integer identifier ID numbers, while less common tokens receive higher ID numbers. Once the input text is tokenized, each token is mapped to a unique ID based on a predefined vocabulary. 
+This vocabulary is created by tokenizing the pre-training dataset, where tokens are ranked by their frequency in the corpus—more common tokens are assigned lower integer identifier ID numbers, while less common tokens receive higher ID numbers. After tokenizing the input text, each token is assigned a unique ID based on a predefined vocabulary.
 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '0px' }}>
   <div style={{ display: 'flex', alignItems: 'center', marginLeft: '10px' }}>
     <span style={{ color: 'black', backgroundColor: '#FECB6F', padding: '5px 5px', borderRadius: '5px', marginRight: '5px', fontSize: '12px' }}>Dump</span>
@@ -82,9 +86,9 @@ This vocabulary is created by tokenizing the pre-training dataset, where tokens 
     <span style={{ color: 'black', backgroundColor: '#FFB0C1', padding: '5px 5px', borderRadius: '5px', marginRight: '5px', fontSize: '12px' }}>11227</span>
   </div>
 </div>
-<p style={{ textAlign: 'center', marginTop: '5px', fontSize: '12px', marginBottom: '-10px' }}><em>Each token has a unique ID.</em></p>
+<p style={{ textAlign: 'center', marginTop: '5px', fontSize: '12px', marginBottom: '-10px' }}>Figure 4: <em>Conversion of tokens to IDs</em></p>
 
-These token IDs are then used to look up corresponding vectors in a large matrix called the **embedding matrix**. The embedding matrix is a learned parameter of the model and is initialized randomly before training. If the model’s dimensionality is `h`, and the vocabulary size is `n`, the embedding matrix will have dimensions `(n x h)`. Each row in this matrix corresponds to the embedding of a particular token ID. For each token ID, the corresponding row from the embedding matrix is retrieved. 
+These token IDs are then used to look up corresponding vectors in a large matrix called the **embedding matrix**. The embedding matrix is a learned parameter of the model and is initialized randomly before training. If the model’s dimensionality is `h`, and the vocabulary size is `n`, the embedding matrix will have dimensions `(n x h)`. Each row in this matrix corresponds to the embedding vector of a specific token ID. For each token ID, the corresponding row from the embedding matrix is retrieved.
 
 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '0px' }}>
   <table style={{ borderCollapse: 'collapse', fontSize: '12px', textAlign: 'center' }}>
@@ -129,16 +133,16 @@ These token IDs are then used to look up corresponding vectors in a large matrix
     </tbody>
   </table>
 </div>
-<p style={{ textAlign: 'center', marginTop: '2px', fontSize: '12px', marginBottom: '-10px' }}><em>These values are random and not the actual values.</em></p>
+<p style={{ textAlign: 'center', marginTop: '2px', fontSize: '12px', marginBottom: '-10px' }}>Matrix 1: <em>Embeddings matrix. These values are random and not the actual values</em></p>
 
 #### 2. Positional Embeddings
-The positional embeddings are learnable parameters, just like the token embeddings. During the initialization phase of the model, the positional embedding vectors is initalized with random values. For example, if the model is designed to handle sequences of up to `s` tokens, there will be `s` positional embedding vectors, one for each possible position in the input sequence. Since Transformers do not have a built-in notion of sequence order, positional embeddings are added to the token embeddings. These embeddings encode the position of each token in the sequence, allowing the model to understand the order of words. In the case of Dumplings, 1st postition vector will be added the the input embedding of "Dump" and 2nd position vector will be added to the input embedding of "##lings".
+The positional embeddings are learnable parameters, just like the token embeddings. During model initialization, the positional embedding vectors are initialized with random values. For example, if the model is designed to handle sequences of up to `s` tokens, there will be `s` positional embedding vectors, one for each possible position in the input sequence. Since Transformers do not have a built-in notion of sequence order, positional embeddings are added to the token embeddings. These embeddings encode the position of each token in the sequence, allowing the model to understand the order of words. In the case of Dumplings, 1st postition vector will be added the the input embedding of "Dump" and 2nd position vector will be added to the input embedding of "##lings". These embeddings ensure the model understands the sequential nature of the data, which is critical for capturing context.
 
 #### 3. Encoder Block
 #### a. Multi-Head Attention
-Multi-head attention, allows the model to focus on different parts of the sequence simultaneously. This mechanism helps the model capture complex relationships between words, regardless of their distance in the sequence.
+Multi-head attention, enables the model to attend to different parts of the sequence simultaneously. This mechanism helps the model capture complex relationships between words, regardless of their distance in the sequence.
 
-After adding the Input Embeddings and Positional Embeddings, we'll get final embeddings `X`. Therefore our matrix `X` would be:
+After adding the Input Embeddings and Positional Embeddings, we'll get final embeddings `X` of shape `(s, h)` where `s` is the input sequence (number of input tokens) length and `h` is the model's dimensionality (embedding vector size). Therefore in case of input "Dumplings are tasty" our matrix `X` would be:
 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '-10px' }}>
   <table style={{ borderCollapse: 'collapse', fontSize: '12px', textAlign: 'center' }}>
     <tbody>
@@ -181,7 +185,7 @@ After adding the Input Embeddings and Positional Embeddings, we'll get final emb
   </table>
 </div>
 <p style={{ textAlign: 'center', marginTop: '10px', lineHeight: '15px', fontSize: '12px', marginBottom: '-10px' }}>
-  <em>The shape of `X` is `(s, h)` where `h` is the model's dimensionality (embedding vector size) and `s` is the input sequence length (number of input tokens).</em>
+  <span>Matrix 2: </span><em>Embedding Matrix `X`.</em>
 </p>
 
 <div>
@@ -262,6 +266,7 @@ After adding the Input Embeddings and Positional Embeddings, we'll get final emb
       </tbody>
     </table>
     <div style={{ textAlign: 'center', marginTop: '10px', lineHeight: '15px', fontSize: '11px' }}>
+      <span>Matrix 3: </span>
       <em>Attention Weight Matrix `W` with the shape `(s, s)`: Softmax</em>
       <span style={{ display: 'inline-flex', alignItems: 'center' }}>
         <span style={{ marginLeft: '2px', marginRight: '2px' }}>(</span>
