@@ -4,7 +4,8 @@ import Link from "./Link";
 import HomeLink from "./HomeLink";
 import AutoRefresh from "./AutoRefresh";
 import { serif, sans } from "./fonts";
-import "./global.css";
+import './global.css';
+
 
 export default function RootLayout({ children }) {
   return (

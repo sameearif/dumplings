@@ -1,5 +1,4 @@
 import { Feed } from "feed";
-
 export function generateFeed(posts, metadata) {
   const site_url = "https://dumplings.sameearif.com/";
 

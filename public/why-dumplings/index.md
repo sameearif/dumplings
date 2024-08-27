@@ -1,6 +1,6 @@
 ---
 title: "Why Dumplings?"
-date: '2024-08-25 '
+date: '2024-08-25'
 spoiler: "Teeny tiny pockets of goodness."
 image: "/why-dumplings/dumplings.jpg"
 ---

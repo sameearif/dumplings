@@ -31,7 +31,7 @@ export default async function PostPage({ params }) {
       <h1
         className={[
           sans.className,
-          "text-[39px] font-black leading-[44px] text-[--title]",
+          "text-[38px] font-black leading-[44px] text-[--title]",
         ].join(" ")}
       >
         {data.title}

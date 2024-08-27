@@ -1,5 +1,5 @@
 /*!*********************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[12].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[12].oneOf[12].use[3]!./app/[slug]/markdown.css ***!
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[3]!./app/[slug]/markdown.css ***!
   \*********************************************************************************************************************************************************************************************************************************************************************/
 .markdown {
     line-height: 28px;
@@ -72,8 +72,7 @@
     padding: 1rem;
     font-size: 0.875rem;
     line-height: 1.25rem;
-    -webkit-clip-path: var(--path);
-            clip-path: var(--path);
+    clip-path: var(--path);
     border-top-right-radius: var(--radius-top);
     border-top-left-radius: var(--radius-top);
     border-bottom-right-radius: var(--radius-bottom);
