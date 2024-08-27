@@ -51,22 +51,22 @@ Each word in the input sequence is first converted into tokens. BERT and RoBERTa
 In addition to word and subword tokens, the vocabulary includes special tokens like:
 
 <div style={{ display: 'flex', alignItems: 'center', marginTop: '-20px' }}>
-  <span style={{ color: 'black', backgroundColor: '#FFD1DC', padding: '2px', borderRadius: '5px', marginRight: '10px', width: '60px', textAlign: 'center', fontSize: '12px' }}>[CLS]</span>
+  <span style={{ color: 'black', backgroundColor: '#FFD1DC', padding: '2px', borderRadius: '5px', marginRight: '10px', width: '60px', textAlign: 'center', fontSize: '12px', flexShrink: 0 }}>[CLS]</span>
   <span style={{ fontSize: '14px' }}>Indicates the start of the sequence.</span>
 </div>
 
 <div style={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
-  <span style={{ color: 'black', backgroundColor: '#AEC6CF', padding: '2px', borderRadius: '5px', marginRight: '10px', width: '60px', textAlign: 'center', fontSize: '12px' }}>[SEP]</span>
+  <span style={{ color: 'black', backgroundColor: '#AEC6CF', padding: '2px', borderRadius: '5px', marginRight: '10px', width: '60px', textAlign: 'center', fontSize: '12px', flexShrink: 0 }}>[SEP]</span>
   <span style={{ fontSize: '14px' }}>Used to separate different segments in a sequence.</span>
 </div>
 
 <div style={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
-  <span style={{ color: 'black', backgroundColor: '#FFB347', padding: '2px', borderRadius: '5px', marginRight: '10px', width: '60px', textAlign: 'center', fontSize: '12px' }}>[MASK]</span>
+  <span style={{ color: 'black', backgroundColor: '#FFB347', padding: '2px', borderRadius: '5px', marginRight: '10px', width: '60px', textAlign: 'center', fontSize: '12px', flexShrink: 0 }}>[MASK]</span>
   <span style={{ fontSize: '14px' }}>Represents masked tokens that the model attempts to predict.</span>
 </div>
 
-<div style={{ display: 'flex', alignItems: 'center', marginTop: '10px',  marginBottom: '15px' }}>
-  <span style={{ color: 'black', backgroundColor: '#CFCFC4', padding: '2px', borderRadius: '5px', marginRight: '10px', width: '60px', textAlign: 'center', fontSize: '12px' }}>[PAD]</span>
+<div style={{ display: 'flex', alignItems: 'center', marginTop: '10px', marginBottom: '15px' }}>
+  <span style={{ color: 'black', backgroundColor: '#CFCFC4', padding: '2px', borderRadius: '5px', marginRight: '10px', width: '60px', textAlign: 'center', fontSize: '12px', flexShrink: 0 }}>[PAD]</span>
   <span style={{ fontSize: '14px' }}>Used for padding multiple sequences to the same length.</span>
 </div>
 
@@ -84,7 +84,7 @@ This vocabulary is created by tokenizing the pre-training dataset, where tokens 
 </div>
 <p style={{ textAlign: 'center', marginTop: '5px', fontSize: '12px', marginBottom: '-10px' }}><em>Each token has a unique ID.</em></p>
 
-These token IDs are then used to look up corresponding vectors in a large matrix called the **embedding matrix**. The embedding matrix is a learned parameter of the model and is initialized randomly before training. If the model’s hidden size is `h`, and the vocabulary size is `n`, the embedding matrix will have dimensions `(n x h)`. Each row in this matrix corresponds to the embedding of a particular token ID. For each token ID, the corresponding row from the embedding matrix is retrieved. 
+These token IDs are then used to look up corresponding vectors in a large matrix called the **embedding matrix**. The embedding matrix is a learned parameter of the model and is initialized randomly before training. If the model’s dimensionality is `h`, and the vocabulary size is `n`, the embedding matrix will have dimensions `(n x h)`. Each row in this matrix corresponds to the embedding of a particular token ID. For each token ID, the corresponding row from the embedding matrix is retrieved. 
 
 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '0px' }}>
   <table style={{ borderCollapse: 'collapse', fontSize: '12px', textAlign: 'center' }}>
@@ -94,7 +94,7 @@ These token IDs are then used to look up corresponding vectors in a large matrix
         <th style={{ border: '1px solid white', padding: '8px' }}>Embedding Dimension 1</th>
         <th style={{ border: '1px solid white', padding: '8px' }}>Embedding Dimension 2</th>
         <th style={{ border: '1px solid white', padding: '8px' }}>...</th>
-        <th style={{ border: '1px solid white', padding: '8px' }}>Embedding Dimension k</th>
+        <th style={{ border: '1px solid white', padding: '8px' }}>Embedding Dimension h</th>
       </tr>
     </thead>
     <tbody>
@@ -112,13 +112,27 @@ These token IDs are then used to look up corresponding vectors in a large matrix
         <td style={{ border: '1px solid white', padding: '8px' }}>...</td>
         <td style={{ border: '1px solid white', padding: '8px' }}>0.067</td>
       </tr>
+      <tr>
+        <td style={{ border: '1px solid white', padding: '8px' }}>...</td>
+        <td style={{ border: '1px solid white', padding: '8px' }}>...</td>
+        <td style={{ border: '1px solid white', padding: '8px' }}>...</td>
+        <td style={{ border: '1px solid white', padding: '8px' }}>...</td>
+        <td style={{ border: '1px solid white', padding: '8px' }}>...</td>
+      </tr>
+      <tr>
+        <td style={{ border: '1px solid white', padding: '8px' }}>Token<sub>n</sub></td>
+        <td style={{ border: '1px solid white', padding: '8px' }}>...</td>
+        <td style={{ border: '1px solid white', padding: '8px' }}>...</td>
+        <td style={{ border: '1px solid white', padding: '8px' }}>...</td>
+        <td style={{ border: '1px solid white', padding: '8px' }}>...</td>
+      </tr>
     </tbody>
   </table>
 </div>
 <p style={{ textAlign: 'center', marginTop: '2px', fontSize: '12px', marginBottom: '-10px' }}><em>These values are random and not the actual values.</em></p>
 
 #### 2. Positional Embeddings
-The positional embeddings are learnable parameters, just like the token embeddings. During the initialization phase of the model, the positional embedding vectors is initalized with random values. For example, if the model is designed to handle sequences of up to *s* tokens, there will be *s* positional embedding vectors, one for each possible position in the input sequence. Since Transformers do not have a built-in notion of sequence order, positional embeddings are added to the token embeddings. These embeddings encode the position of each token in the sequence, allowing the model to understand the order of words. In the case of Dumplings, 1st postition vector will be added the the input embedding of "Dump" and 2nd position vector will be added to the input embedding of "##lings".
+The positional embeddings are learnable parameters, just like the token embeddings. During the initialization phase of the model, the positional embedding vectors is initalized with random values. For example, if the model is designed to handle sequences of up to `s` tokens, there will be `s` positional embedding vectors, one for each possible position in the input sequence. Since Transformers do not have a built-in notion of sequence order, positional embeddings are added to the token embeddings. These embeddings encode the position of each token in the sequence, allowing the model to understand the order of words. In the case of Dumplings, 1st postition vector will be added the the input embedding of "Dump" and 2nd position vector will be added to the input embedding of "##lings".
 
 #### 3. Encoder Block
 #### a. Multi-Head Attention
@@ -258,51 +272,6 @@ After adding the Input Embeddings and Positional Embeddings, we'll get final emb
         <span style={{ marginLeft: '2px', marginRight: '2px' }}>)</span>
       </span>
     </div>
-  </div>
-  <div style={{ marginLeft: '20px', marginRight: '40px' }}>X</div>
-  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-    <table style={{ borderCollapse: 'collapse', fontSize: '12px', textAlign: 'center' }}>
-      <tbody>
-        <tr>
-          <td style={{ border: '1px solid white', padding: '8px' }}>Dump</td>
-          <td style={{ border: '1px solid white', padding: '8px' }}>V<sub>11</sub></td>
-          <td style={{ border: '1px solid white', padding: '8px' }}>V<sub>12</sub></td>
-          <td style={{ border: '1px solid white', padding: '8px' }}>...</td>
-          <td style={{ border: '1px solid white', padding: '8px' }}>V<sub>1k</sub></td>
-        </tr>
-        <tr>
-          <td style={{ border: '1px solid white', padding: '8px' }}>##lings</td>
-          <td style={{ border: '1px solid white', padding: '8px' }}>V<sub>21</sub></td>
-          <td style={{ border: '1px solid white', padding: '8px' }}>V<sub>22</sub></td>
-          <td style={{ border: '1px solid white', padding: '8px' }}>...</td>
-          <td style={{ border: '1px solid white', padding: '8px' }}>V<sub>2k</sub></td>
-        </tr>
-        <tr>
-          <td style={{ border: '1px solid white', padding: '8px' }}>are</td>
-          <td style={{ border: '1px solid white', padding: '8px' }}>V<sub>31</sub></td>
-          <td style={{ border: '1px solid white', padding: '8px' }}>V<sub>32</sub></td>
-          <td style={{ border: '1px solid white', padding: '8px' }}>...</td>
-          <td style={{ border: '1px solid white', padding: '8px' }}>V<sub>3k</sub></td>
-        </tr>
-        <tr>
-          <td style={{ border: '1px solid white', padding: '8px' }}>ta</td>
-          <td style={{ border: '1px solid white', padding: '8px' }}>V<sub>41</sub></td>
-          <td style={{ border: '1px solid white', padding: '8px' }}>V<sub>42</sub></td>
-          <td style={{ border: '1px solid white', padding: '8px' }}>...</td>
-          <td style={{ border: '1px solid white', padding: '8px' }}>V<sub>4k</sub></td>
-        </tr>
-        <tr>
-          <td style={{ border: '1px solid white', padding: '8px' }}>##sty</td>
-          <td style={{ border: '1px solid white', padding: '8px' }}>V<sub>51</sub></td>
-          <td style={{ border: '1px solid white', padding: '8px' }}>V<sub>52</sub></td>
-          <td style={{ border: '1px solid white', padding: '8px' }}>...</td>
-          <td style={{ border: '1px solid white', padding: '8px' }}>V<sub>5k</sub></td>
-        </tr>
-      </tbody>
-    </table>
-    <span style={{ textAlign: 'center', marginTop: '10px', lineHeight: '15px', fontSize: '11px' }}>
-      <em>Value Matrix `V` with the shape `(s, h)`</em>
-    </span>
   </div>
 </div>
 
