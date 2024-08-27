@@ -1,6 +1,6 @@
 ---
 title: "To BERT, with RoBERTa: Part I"
-date: '2024-08-26'
+date: '2024-08-27'
 spoiler: "Understanding the encoder-only models."
 image: "/to-bert-with-roberta-p1/bert.png"
 ---

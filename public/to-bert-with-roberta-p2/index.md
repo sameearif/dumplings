@@ -1,6 +1,6 @@
 ---
 title: "To BERT, with RoBERTa: Part II"
-date: '2024-08-27'
+date: '2024-08-28'
 spoiler: "Fine-tuning the models for question-answering."
 image: "/to-bert-with-roberta-p2/bert.png"
 ---
