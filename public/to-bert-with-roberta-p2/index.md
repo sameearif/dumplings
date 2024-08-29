@@ -228,7 +228,7 @@ model = AutoModelForQuestionAnswering.from_pretrained("SAVE_DIR\checkpoint-XYZ")
 ```python
 context = "ہم اپنے فائن ٹیونڈ سوال و جواب ماڈل پر جلد ہی انفریئنس چلانے والے ہیں!"
 question = "ہم کیا کرنے والے ہیں؟"
-inputs = tokenizer(context, question, padding="max_length", truncation=True, max_length=512, return_tensors="pt").to("cuda")
+inputs = tokenizer(question, context, truncation="only_second", padding="max_length", truncation=True, max_length=512, return_tensors="pt").to("cuda")
 with torch.no_grad():
   output = model(**inputs)
   start_logits, end_logits = output.start_logits, output.end_logits
